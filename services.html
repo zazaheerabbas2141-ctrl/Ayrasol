@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services Section</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 50px 0;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #2a727d;
+    }
+
+    .services-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 45px;
+      padding: 20px;
+    }
+
+    .service-card {
+      background: #e6e6e6;
+      padding: 25px;
+      border-radius: 10px;
+      position: relative;
+      text-align: center;
+      transition: all 0.3s ease;
+      color: #2a727d;
+      width: 250px;
+      height: 290px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-card.highlight { 
+      background: #2a727d;
+      color: white;
+    }
+ 
+    .service-card i.main-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #2a727d;
+      display: block;
+      transition: all 0.4s ease;
+    }
+
+    .service-card.highlight i.main-icon {
+      color: white;
+    }
+
+    .service-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      transition: all 0.4s ease;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #2a727d;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.5s ease 0.1s;
+      margin: 0;
+    }
+
+    .service-card.highlight p {
+      color: #e0e0e0;
+    }
+
+    .read-more {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #2a727d;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.5s ease 0.2s;
+    }
+
+    .service-card.highlight .read-more {
+      color: white;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: #2a727d;
+      clip-path: circle(0% at 100% 100%);
+      transition: all 0.6s ease;
+      z-index: 0;
+    }
+
+    .service-card.highlight::before {
+      background: #e6e6e6;
+    }
+
+    .service-card:hover::before {
+      clip-path: circle(150% at 100% 100%);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .service-card:hover p {
+      opacity: 1;
+      max-height: 80px;
+    }
+
+    .service-card:hover .read-more {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover i.main-icon {
+      transform: scale(1.1) rotate(10deg);
+    }
+
+    .service-card:hover h3 {
+      transform: translateY(-5px);
+    }
+
+    .service-card:hover {
+      color: white;
+    }
+
+    .service-card:hover i.main-icon {
+      color: white;
+    }
+
+    .service-card:hover p {
+      color: white;
+    }
+
+    .service-card.highlight:hover {
+      color: #2a727d;
+    }
+
+    .service-card.highlight:hover i.main-icon {
+      color: #2a727d;
+    }
+
+    .service-card.highlight:hover p {
+      color: #2a727d;
+    }
+
+    .service-card.highlight:hover .read-more {
+      color: #2a727d;
+    }
+
+    .arrow-badge {
+      width: 46px;
+      height: 46px;
+      background: #e6e6e6;
+      border-radius: 50%;
+      position: absolute;
+      bottom: -15px;
+      right: -15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 12px solid #ffffff;
+      z-index: 2;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .service-card.highlight .arrow-badge {
+       background: #e6e6e6;
+       border: 12px solid #ffffff;
+      box-shadow: none;
+    }
+
+    .service-card:hover .arrow-badge {
+      background: #2a727d;
+    }
+
+    .service-card.highlight:hover .arrow-badge {
+      background: #e6e6e6;
+    }
+
+    .arrow-badge i {
+      color: #2a727d;
+      font-size: 14px;
+      transition: all 0.4s ease;
+    }
+
+    .service-card.highlight .arrow-badge i {
+      color: #2a727d;
+
+    }
+
+    .service-card:hover .arrow-badge i {
+      color: white;
+   transform: scale(1.1) rotate(10deg);
+
+    }
+
+    .service-card.highlight:hover .arrow-badge i {
+      color: #2a727d;
+  transform: scale(1.1) rotate(10deg);
+
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Our Services</h2>
+
+  <div class="services-container">
+    <div class="service-card highlight">
+      <div class="arrow-badge">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </div>
+      <div class="card-content">
+        <i class="fa-solid fa-code main-icon"></i>
+        <h3>Web Development</h3>
+        <p>Professional and responsive websites built with clean design and functionality.</p>
+        <a href="#" class="read-more">Read More →</a>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="arrow-badge">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </div>
+      <div class="card-content">
+        <i class="fa-solid fa-chart-line main-icon"></i>
+        <h3>SEO</h3>
+        <p>Boost your online visibility and rank higher with smart SEO strategy.</p>
+        <a href="#" class="read-more">Read More →</a>
+      </div>
+    </div>
+
+    <div class="service-card highlight">
+      <div class="arrow-badge">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </div>
+      <div class="card-content">
+        <i class="fa-solid fa-pen-nib main-icon"></i>
+        <h3>Graphic Design</h3>
+        <p>Creative branding, marketing graphics, and visual storytelling for your business.</p>
+        <a href="#" class="read-more">Read More →</a>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="arrow-badge">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </div>
+      <div class="card-content">
+        <i class="fa-solid fa-headset main-icon"></i>
+        <h3>Virtual Assistance</h3>
+        <p>Reliable digital support services to help manage your tasks efficiently.</p>
+        <a href="#" class="read-more">Read More →</a>
+      </div>
+    </div>
+
+    <div class="service-card highlight">
+      <div class="arrow-badge">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </div>
+      <div class="card-content">
+        <i class="fa-solid fa-feather-pointed main-icon"></i>
+        <h3>Content Creation</h3>
+        <p>Engaging written and digital content to connect with your audience effectively.</p>
+        <a href="#" class="read-more">Read More →</a>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="arrow-badge">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </div>
+      <div class="card-content">
+        <i class="fa-solid fa-clapperboard main-icon"></i>
+        <h3>Motion Graphics</h3>
+        <p>Animated visuals and motion content to level up your media presence.</p>
+        <a href="#" class="read-more">Read More →</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
