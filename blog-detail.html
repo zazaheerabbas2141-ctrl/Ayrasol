@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f1f1;
+            color: #183039;
+            line-height: 1.6;
+        }
+
+        .blog-detail-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .back-to-blog {
+            display: inline-flex;
+            align-items: center;
+            color: #2a727d;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-blog:hover {
+            color: #183039;
+        }
+
+        .back-to-blog i {
+            margin-right: 8px;
+        }
+
+        .blog-detail-header {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .blog-detail-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-detail-header-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .blog-detail-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .blog-detail-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .blog-detail-body {
+            margin-top: 40px;
+        }
+
+        .blog-detail-content {
+            padding: 0;
+            border-radius: 12px;
+        }
+
+        .blog-detail-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .blog-detail-text p {
+            margin-bottom: 25px;
+        }
+
+        .blog-detail-subtitle {
+            font-size: 1.5rem;
+            margin: 40px 0 20px;
+            color: #2a727d;
+            line-height: 1.4;
+        }
+
+        .blog-detail-list {
+            margin-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        .blog-detail-list li {
+            margin-bottom: 10px;
+        }
+
+        .blog-detail-images {
+            display: flex;
+            gap: 20px;
+            margin: 40px 0;
+            justify-content: center;
+        }
+
+        .blog-detail-image {
+            width: 45%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .blog-detail-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .blog-detail-image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .blog-detail-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            border-top: 1px solid #e6e6e6;
+            margin-top: 40px;
+        }
+
+        .blog-detail-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .blog-detail-tag {
+            background-color: rgba(42, 114, 125, 0.1);
+            color: #2a727d;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .blog-detail-share {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .share-text {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .share-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .blog-detail-share a {
+            color: #2a727d;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .blog-detail-share a:hover {
+            color: #183039;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-date {
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .blog-detail-header {
+                height: 300px;
+            }
+            
+            .blog-detail-title {
+                font-size: 1.8rem;
+            }
+            
+            .blog-detail-header-overlay {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 25px;
+            }
+            
+            .blog-detail-meta {
+                align-items: flex-start;
+            }
+            
+            .blog-detail-images {
+                flex-direction: column;
+            }
+            
+            .blog-detail-image {
+                width: 100%;
+            }
+            
+            .blog-detail-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-detail-header {
+                height: 200px;
+            }
+            
+            .blog-detail-title {
+                font-size: 1.5rem;
+            }
+            
+            .blog-detail-header-overlay {
+                padding: 20px;
+            }
+            
+            .blog-detail-text {
+                font-size: 1rem;
+            }
+            
+            .blog-detail-subtitle {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Blog Detail Page -->
+    <div class="blog-detail-page" id="blogDetailPage">
+        <a href="index.html" class="back-to-blog" id="backToBlog">
+            <i class="fas fa-arrow-left"></i> Back to Blog
+        </a>
+        
+        <div class="blog-detail-header">
+            <img id="detailImage" src="" alt="">
+            <div class="blog-detail-header-overlay">
+                <div>
+                    <h1 id="detailTitle" class="blog-detail-title"></h1>
+                    <span id="detailCategory" class="category-badge"></span>
+                </div>
+                <div class="blog-detail-meta">
+                    <span id="detailDate" class="blog-date"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="blog-detail-body">
+            <div class="blog-detail-content">
+                <div id="detailContent" class="blog-detail-text">
+                    <!-- Blog content will be inserted here dynamically -->
+                </div>
+                
+                <div class="blog-detail-footer">
+                    <div class="blog-detail-tags" id="detailTags">
+                        <!-- Tags will be inserted here dynamically -->
+                    </div>
+                    <div class="blog-detail-share">
+                        <div class="share-text">Follow us on:</div>
+                        <div class="share-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Blog data
+        const blogData = {
+            1: {
+                title: "Top Web Development Trends in 2023",
+                category: "Web Development",
+                date: "June 15, 2023",
+                image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+                tags: ["Web Development", "Trends", "Technology"],
+                content: `
+                    <p>The web development landscape is constantly evolving, with new technologies and approaches emerging every year. In 2023, we're seeing several key trends that are shaping the future of how we build for the web.</p>
+                    
+                    <h3 class="blog-detail-subtitle">Progressive Web Apps (PWAs)</h3>
+                    <p>Progressive Web Apps continue to gain traction as they bridge the gap between web and mobile applications. PWAs offer offline functionality, push notifications, and device hardware access while maintaining the reach and accessibility of the web.</p>
+                    
+                    <div class="blog-detail-images">
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Progressive Web App Example">
+                            <div class="blog-detail-image-caption">Progressive Web Apps provide app-like experiences</div>
+                        </div>
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80" alt="AI Development Tools">
+                            <div class="blog-detail-image-caption">AI-powered tools are revolutionizing development</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="blog-detail-subtitle">Serverless Architecture</h3>
+                    <p>Serverless computing allows developers to build and run applications without managing infrastructure. This approach reduces operational costs and complexity while improving scalability.</p>
+                    
+                    <h3 class="blog-detail-subtitle">AI-Powered Development</h3>
+                    <p>Artificial intelligence is being integrated into development tools to automate repetitive tasks, generate code, and improve testing processes. This allows developers to focus on more complex problems.</p>
+                    
+                    <h3 class="blog-detail-subtitle">WebAssembly (Wasm)</h3>
+                    <p>WebAssembly enables high-performance applications to run in the browser at near-native speed. This technology is opening up new possibilities for web-based games, video editing software, and other computationally intensive applications.</p>
+                    
+                    <p>Staying current with these trends is essential for developers who want to build modern, efficient, and user-friendly web applications that meet today's expectations.</p>
+                `
+            },
+            2: {
+                title: "Comparing JavaScript Frameworks: React vs Vue vs Angular",
+                category: "Web Development",
+                date: "May 28, 2023",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80",
+                tags: ["JavaScript", "Frameworks", "Comparison"],
+                content: `
+                    <p>Choosing the right JavaScript framework for your project can be challenging with so many excellent options available. In this article, we compare three of the most popular frameworks: React, Vue, and Angular.</p>
+                    
+                    <h3 class="blog-detail-subtitle">React</h3>
+                    <p>Developed by Facebook, React is a library for building user interfaces. It uses a virtual DOM for efficient updates and has a large ecosystem of tools and libraries.</p>
+                    <ul class="blog-detail-list">
+                        <li><strong>Pros:</strong> Large community, excellent performance, flexible architecture</li>
+                        <li><strong>Cons:</strong> Steeper learning curve, rapidly changing ecosystem</li>
+                        <li><strong>Best for:</strong> Large-scale applications, teams familiar with JavaScript</li>
+                    </ul>
+                    
+                    <div class="blog-detail-images">
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="React Framework">
+                            <div class="blog-detail-image-caption">React's component-based architecture</div>
+                        </div>
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Angular Framework">
+                            <div class="blog-detail-image-caption">Angular provides a complete framework solution</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="blog-detail-subtitle">Vue</h3>
+                    <p>Vue is known for its gentle learning curve and approachable API. It combines the best features of React and Angular while remaining lightweight and easy to integrate.</p>
+                    <ul class="blog-detail-list">
+                        <li><strong>Pros:</strong> Easy to learn, excellent documentation, flexible</li>
+                        <li><strong>Cons:</strong> Smaller community than React, fewer job opportunities</li>
+                        <li><strong>Best for:</strong> Startups, small to medium projects, rapid prototyping</li>
+                    </ul>
+                    
+                    <h3 class="blog-detail-subtitle">Angular</h3>
+                    <p>Angular is a full-fledged framework developed by Google. It provides a complete solution for building complex applications with built-in tools for routing, state management, and more.</p>
+                    <ul class="blog-detail-list">
+                        <li><strong>Pros:</strong> Comprehensive solution, strong typing with TypeScript, enterprise-ready</li>
+                        <li><strong>Cons:</strong> Steep learning curve, verbose code, larger bundle size</li>
+                        <li><strong>Best for:</strong> Enterprise applications, large teams, projects requiring strict structure</li>
+                    </ul>
+                    
+                    <p>Ultimately, the best framework depends on your project requirements, team expertise, and long-term goals. All three are excellent choices that can help you build modern web applications.</p>
+                `
+            },
+            3: {
+                title: "Creating a Winning Social Media Strategy",
+                category: "Social Media Marketing",
+                date: "July 2, 2023",
+                image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+                tags: ["Social Media", "Strategy", "Marketing"],
+                content: `
+                    <p>A well-defined social media strategy is essential for any business looking to establish a strong online presence and connect with their target audience. In this guide, we'll walk through the key components of creating an effective social media strategy.</p>
+                    
+                    <h3 class="blog-detail-subtitle">Define Your Goals</h3>
+                    <p>Before creating content, you need to define what you want to achieve. Common social media goals include:</p>
+                    <ul class="blog-detail-list">
+                        <li>Increasing brand awareness</li>
+                        <li>Driving website traffic</li>
+                        <li>Generating leads</li>
+                        <li>Improving customer engagement</li>
+                        <li>Boosting sales</li>
+                    </ul>
+                    
+                    <div class="blog-detail-images">
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80" alt="Social Media Goals">
+                            <div class="blog-detail-image-caption">Setting clear goals is the foundation</div>
+                        </div>
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Social Media Platforms">
+                            <div class="blog-detail-image-caption">Different platforms attract different audiences</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="blog-detail-subtitle">Know Your Audience</h3>
+                    <p>Understanding your target audience is crucial for creating content that resonates. Develop buyer personas that include demographics, interests, pain points, and social media habits.</p>
+                    
+                    <h3 class="blog-detail-subtitle">Choose the Right Platforms</h3>
+                    <p>Not all social media platforms are right for every business. Focus your efforts on platforms where your target audience is most active:</p>
+                    <ul class="blog-detail-list">
+                        <li><strong>Facebook:</strong> Broad demographic, great for community building</li>
+                        <li><strong>Instagram:</strong> Visual content, younger audience</li>
+                        <li><strong>LinkedIn:</strong> B2B, professional content</li>
+                        <li><strong>TikTok:</strong> Short-form video, Gen Z and Millennials</li>
+                        <li><strong>Twitter:</strong> Real-time updates, news, conversations</li>
+                    </ul>
+                    
+                    <h3 class="blog-detail-subtitle">Create a Content Calendar</h3>
+                    <p>Planning your content in advance ensures consistency and helps you maintain a balanced mix of content types. Your calendar should include:</p>
+                    <ul class="blog-detail-list">
+                        <li>Posting dates and times</li>
+                        <li>Content themes</li>
+                        <li>Platform-specific content</li>
+                        <li>Campaign timelines</li>
+                    </ul>
+                    
+                    <p>Remember to track your performance and adjust your strategy based on what's working. Social media is constantly evolving, so your strategy should be flexible enough to adapt to new trends and platform changes.</p>
+                `
+            },
+            4: {
+                title: "The Future of SEO: AI and Machine Learning",
+                category: "SEO",
+                date: "June 20, 2023",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                tags: ["SEO", "AI", "Machine Learning"],
+                content: `
+                    <p>Search engine optimization is undergoing a significant transformation as artificial intelligence and machine learning become increasingly integrated into search algorithms. Understanding these changes is crucial for staying ahead in the SEO landscape.</p>
+                    
+                    <h3 class="blog-detail-subtitle">How AI is Changing Search</h3>
+                    <p>Google's BERT and MUM algorithms represent major advancements in understanding natural language and user intent. These AI-powered systems can:</p>
+                    <ul class="blog-detail-list">
+                        <li>Understand context and nuance in search queries</li>
+                        <li>Process information across multiple modalities (text, images, video)</li>
+                        <li>Generate more accurate and helpful search results</li>
+                        <li>Personalize results based on individual user behavior</li>
+                    </ul>
+                    
+                    <div class="blog-detail-images">
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1677442135136-760c81240f3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80" alt="AI in Search">
+                            <div class="blog-detail-image-caption">AI algorithms are making search more intelligent</div>
+                        </div>
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80" alt="SEO Analytics">
+                            <div class="blog-detail-image-caption">Modern SEO tools leverage AI for better insights</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="blog-detail-subtitle">The Rise of Semantic Search</h3>
+                    <p>Traditional SEO focused heavily on keywords, but semantic search understands the meaning behind queries. This means:</p>
+                    <ul class="blog-detail-list">
+                        <li>Content should be organized around topics, not just keywords</li>
+                        <li>Entities and their relationships matter more than individual words</li>
+                        <li>User intent is the primary ranking factor</li>
+                    </ul>
+                    
+                    <h3 class="blog-detail-subtitle">AI-Powered SEO Tools</h3>
+                    <p>SEO professionals now have access to AI-powered tools that can:</p>
+                    <ul class="blog-detail-list">
+                        <li>Predict ranking potential for specific keywords</li>
+                        <li>Generate content ideas based on user intent analysis</li>
+                        <li>Identify technical issues at scale</li>
+                        <li>Automate routine optimization tasks</li>
+                    </ul>
+                    
+                    <h3 class="blog-detail-subtitle">Preparing for the Future</h3>
+                    <p>To succeed in this AI-driven SEO landscape, focus on:</p>
+                    <ul class="blog-detail-list">
+                        <li>Creating comprehensive, high-quality content that addresses user needs</li>
+                        <li>Structuring your content to help search engines understand context</li>
+                        <li>Optimizing for user experience metrics like Core Web Vitals</li>
+                        <li>Building topical authority through in-depth coverage of your niche</li>
+                    </ul>
+                    
+                    <p>The future of SEO is not about tricking algorithms but about genuinely helping users find what they're looking for. AI is making search smarter, and the best SEO strategies will align with this direction.</p>
+                `
+            },
+            5: {
+                title: "The Psychology of Color in Brand Identity",
+                category: "Graphic Design",
+                date: "May 15, 2023",
+                image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80",
+                tags: ["Color Psychology", "Branding", "Design"],
+                content: `
+                    <p>Color is one of the most powerful tools in a designer's arsenal when it comes to building a strong brand identity. The colors you choose can evoke specific emotions, influence perceptions, and even drive consumer behavior.</p>
+                    
+                    <h3 class="blog-detail-subtitle">Understanding Color Psychology</h3>
+                    <p>Color psychology examines how different hues affect human behavior and decision-making. While individual experiences can influence color perception, there are universal associations that span cultures:</p>
+                    <ul class="blog-detail-list">
+                        <li><strong>Red:</strong> Energy, passion, urgency (often used for clearance sales)</li>
+                        <li><strong>Blue:</strong> Trust, security, calm (popular with banks and tech companies)</li>
+                        <li><strong>Green:</strong> Growth, health, nature (common in organic and eco-friendly brands)</li>
+                        <li><strong>Yellow:</strong> Optimism, warmth, attention-grabbing (used to highlight important elements)</li>
+                        <li><strong>Purple:</strong> Luxury, creativity, wisdom (often associated with premium products)</li>
+                        <li><strong>Orange:</strong> Enthusiasm, fun, affordability (frequently used by budget brands)</li>
+                    </ul>
+                    
+                    <div class="blog-detail-images">
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Color Psychology">
+                            <div class="blog-detail-image-caption">Different colors evoke different emotional responses</div>
+                        </div>
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1158&q=80" alt="Cultural Color Meanings">
+                            <div class="blog-detail-image-caption">Color meanings can vary across cultures</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="blog-detail-subtitle">Color in Brand Recognition</h3>
+                    <p>Studies show that color increases brand recognition by up to 80%. Consistent use of color across all touchpoints helps consumers quickly identify your brand, even without seeing your logo.</p>
+                    
+                    <h3 class="blog-detail-subtitle">Cultural Considerations</h3>
+                    <p>When designing for global audiences, it's important to consider cultural differences in color symbolism. For example:</p>
+                    <ul class="blog-detail-list">
+                        <li>White represents purity in Western cultures but is associated with mourning in some Eastern cultures</li>
+                        <li>Red is lucky in China but can represent danger or debt in Western countries</li>
+                        <li>Purple is associated with royalty in Europe but with mourning in Brazil</li>
+                    </ul>
+                    
+                    <h3 class="blog-detail-subtitle">Applying Color Psychology to Your Brand</h3>
+                    <p>When selecting colors for your brand identity:</p>
+                    <ul class="blog-detail-list">
+                        <li>Consider your target audience's demographics and preferences</li>
+                        <li>Align color choices with your brand personality and values</li>
+                        <li>Research competitors' color palettes to stand out</li>
+                        <li>Test color combinations for accessibility and legibility</li>
+                        <li>Create a color system with primary, secondary, and accent colors</li>
+                    </ul>
+                    
+                    <p>Remember that while color psychology provides valuable guidelines, the most effective color choices are those that authentically represent your brand and resonate with your specific audience.</p>
+                `
+            },
+            6: {
+                title: "Creating Engaging Video Content for Social Media",
+                category: "Motion Graphics",
+                date: "July 10, 2023",
+                image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1228&q=80",
+                tags: ["Video", "Social Media", "Content Creation"],
+                content: `
+                    <p>Video has become the dominant form of content on social media, with platforms prioritizing video in their algorithms. Creating engaging video content requires understanding both technical production aspects and audience psychology.</p>
+                    
+                    <h3 class="blog-detail-subtitle">The Power of Video on Social Media</h3>
+                    <p>Video content generates 1200% more shares than text and image content combined. On platforms like TikTok and Instagram Reels, short-form video has revolutionized how brands connect with audiences.</p>
+                    
+                    <div class="blog-detail-images">
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Video Content">
+                            <div class="blog-detail-image-caption">Video content dominates social media platforms</div>
+                        </div>
+                        <div class="blog-detail-image">
+                            <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Motion Graphics">
+                            <div class="blog-detail-image-caption">Motion graphics can make content more engaging</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="blog-detail-subtitle">Essential Video Formats for Social Media</h3>
+                    <p>Different platforms favor different video formats:</p>
+                    <ul class="blog-detail-list">
+                        <li><strong>TikTok/Reels:</strong> 9:16 vertical videos, 15-60 seconds, trending audio</li>
+                        <li><strong>YouTube:</strong> 16:9 horizontal videos, various lengths, high production value</li>
+                        <li><strong>Facebook:</strong> Square (1:1) or vertical (9:16), captions recommended</li>
+                        <li><strong>LinkedIn:</strong> Professional tone, educational content, captions essential</li>
+                    </ul>
+                    
+                    <h3 class="blog-detail-subtitle">Creating Scroll-Stopping Content</h3>
+                    <p>With attention spans shorter than ever, your videos need to capture attention within the first 3 seconds:</p>
+                    <ul class="blog-detail-list">
+                        <li>Start with a compelling visual or question</li>
+                        <li>Use text overlays to highlight key points</li>
+                        <li>Incorporate movement and dynamic transitions</li>
+                        <li>Use trending audio when appropriate</li>
+                        <li>Create a sense of urgency or curiosity</li>
+                    </ul>
+                    
+                    <h3 class="blog-detail-subtitle">Motion Graphics Best Practices</h3>
+                    <p>When creating motion graphics for social media:</p>
+                    <ul class="blog-detail-list">
+                        <li>Keep animations clean and purposeful</li>
+                        <li>Use brand colors and fonts consistently</li>
+                        <li>Optimize file sizes for fast loading</li>
+                        <li>Design for sound-off viewing with captions</li>
+                        <li>Create templates for recurring content series</li>
+                    </ul>
+                    
+                    <h3 class="blog-detail-subtitle">Measuring Video Performance</h3>
+                    <p>Track these key metrics to understand what resonates with your audience:</p>
+                    <ul class="blog-detail-list">
+                        <li><strong>View-through rate:</strong> Percentage of viewers who watch your entire video</li>
+                        <li><strong>Engagement rate:</strong> Likes, comments, and shares relative to views</li>
+                        <li><strong>Audience retention:</strong> Where viewers drop off in your video</li>
+                        <li><strong>Click-through rate:</strong> How many viewers take action after watching</li>
+                    </ul>
+                    
+                    <p>The most successful social media video strategies combine consistent posting with experimentation. Pay attention to what works for your specific audience and double down on those content types while continuously testing new approaches.</p>
+                `
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get blog ID from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const blogId = urlParams.get('blog');
+            
+            // If blog parameter exists, show that blog
+            if (blogId && blogData[blogId]) {
+                showBlogDetail(blogId);
+            } else {
+                // If no valid blog ID, redirect to main page
+                window.location.href = 'index.html';
+            }
+            
+            // Function to show blog detail
+            function showBlogDetail(blogId) {
+                const blog = blogData[blogId];
+                if (!blog) return;
+                
+                // Populate blog detail page
+                document.getElementById('detailImage').src = blog.image;
+                document.getElementById('detailTitle').textContent = blog.title;
+                document.getElementById('detailCategory').textContent = blog.category;
+                document.getElementById('detailDate').textContent = blog.date;
+                document.getElementById('detailContent').innerHTML = blog.content;
+                
+                // Populate tags
+                const tagsContainer = document.getElementById('detailTags');
+                tagsContainer.innerHTML = '';
+                blog.tags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'blog-detail-tag';
+                    tagElement.textContent = tag;
+                    tagsContainer.appendChild(tagElement);
+                });
+                
+                // Update page title
+                document.title = `${blog.title} | Our Recent Blogs`;
+                
+                // Scroll to top of the page
+                window.scrollTo(0, 0);
+            }
+        });
+    </script>
+</body>
+</html>
