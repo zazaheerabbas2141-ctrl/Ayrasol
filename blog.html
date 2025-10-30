@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Recent Blogs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f1f1;
+            color: #183039;
+            line-height: 1.6;
+        }
+
+        .blogs-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #183039;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: #2a727d;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Tabs Navigation */
+        .tabs-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .tabs-nav {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 5px;
+            justify-content: center;
+        }
+
+        .tabs-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #183039;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            margin-right: -3px;
+        }
+
+        .tab-btn:hover {
+            background-color: rgba(42, 114, 125, 0.1);
+        }
+
+        .tab-btn.active {
+            background-color: #2a727d;
+            color: #ffffff;
+        }
+
+        /* Blogs Grid */
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card.hidden {
+            display: none;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .preview-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background-color: #e6e6e6;
+            cursor: pointer;
+        }
+
+        .preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover .preview-container img {
+            transform: scale(1.03);
+        }
+
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(24, 48, 57, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .preview-container:hover .preview-overlay {
+            opacity: 1;
+        }
+
+        .view-icon {
+            color: #ffffff;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .preview-overlay:hover .view-icon {
+            transform: scale(1.2);
+        }
+
+        .blog-info {
+            padding: 25px;
+            position: relative;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background-color: rgba(42, 114, 125, 0.1);
+            color: #2a727d;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            color: #183039;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            line-height: 1.4;
+        }
+
+        .blog-title:hover {
+            color: #2a727d;
+        }
+
+        .blog-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .blog-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .blog-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #2a727d;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #2a727d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-btn:hover {
+            background-color: transparent;
+            color: #2a727d;
+            padding-right: 40px;
+        }
+
+        .blog-btn:hover .btn-arrow {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .btn-arrow {
+            position: absolute;
+            right: 15px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform: translateX(-5px);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .blogs-section {
+                max-width: 1200px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .blogs-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blogs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .tab-btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+            
+            .tabs-nav {
+                justify-content: flex-start;
+            }
+            
+            .blog-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .blog-btn {
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blogs-section {
+                padding: 40px 15px;
+            }
+            
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            
+            .blog-info {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Blogs Section -->
+    <section class="blogs-section" id="blogsSection">
+        <div class="section-header">
+            <h2>Our Recent Blogs</h2>
+            <p>Explore our latest insights across different digital disciplines</p>
+        </div>
+
+        <div class="tabs-container">
+            <nav class="tabs-nav" id="tabsNav">
+                <button class="tab-btn active" data-tab="all">All</button>
+                <button class="tab-btn" data-tab="web-development">Web Development</button>
+                <button class="tab-btn" data-tab="social-media-marketing">Social Media Marketing</button>
+                <button class="tab-btn" data-tab="seo">SEO</button>
+                <button class="tab-btn" data-tab="graphic-design">Graphic Design</button>
+                <button class="tab-btn" data-tab="motion-graphics">Motion Graphics</button>
+            </nav>
+        </div>
+
+        <div class="blogs-grid" id="blogsGrid">
+            <!-- Web Development Blogs -->
+            <div class="blog-card" data-category="web-development">
+                <div class="preview-container" data-blog="1">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Web Development Trends">
+                    <div class="preview-overlay" data-blog="1">
+                        <i class="fas fa-external-link-alt view-icon"></i>
+                    </div>
+                </div>
+                <div class="blog-info">
+                    <span class="category-badge">Web Development</span>
+                    <h3 class="blog-title" data-blog="1">Top Web Development Trends in 2023</h3>
+                    <p class="blog-description">Explore the latest technologies and frameworks that are shaping the future of web development.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">June 15, 2023</span>
+                        <a href="blog-detail.html?blog=1" class="blog-btn read-more-btn" data-blog="1">
+                            Read More
+                            <i class="fas fa-arrow-right btn-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog-card" data-category="web-development">
+                <div class="preview-container" data-blog="2">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80" alt="JavaScript Frameworks">
+                    <div class="preview-overlay" data-blog="2">
+                        <i class="fas fa-external-link-alt view-icon"></i>
+                    </div>
+                </div>
+                <div class="blog-info">
+                    <span class="category-badge">Web Development</span>
+                    <h3 class="blog-title" data-blog="2">Comparing JavaScript Frameworks: React vs Vue vs Angular</h3>
+                    <p class="blog-description">A comprehensive comparison of the most popular JavaScript frameworks and when to use each.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">May 28, 2023</span>
+                        <a href="blog-detail.html?blog=2" class="blog-btn read-more-btn" data-blog="2">
+                            Read More
+                            <i class="fas fa-arrow-right btn-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Marketing Blogs -->
+            <div class="blog-card" data-category="social-media-marketing">
+                <div class="preview-container" data-blog="3">
+                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Social Media Strategy">
+                    <div class="preview-overlay" data-blog="3">
+                        <i class="fab fa-instagram view-icon"></i>
+                    </div>
+                </div>
+                <div class="blog-info">
+                    <span class="category-badge">Social Media Marketing</span>
+                    <h3 class="blog-title" data-blog="3">Creating a Winning Social Media Strategy</h3>
+                    <p class="blog-description">Learn how to develop a social media strategy that drives engagement and conversions.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">July 2, 2023</span>
+                        <a href="blog-detail.html?blog=3" class="blog-btn read-more-btn" data-blog="3">
+                            Read More
+                            <i class="fas fa-arrow-right btn-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Blogs -->
+            <div class="blog-card" data-category="seo">
+                <div class="preview-container" data-blog="4">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="SEO Analytics">
+                    <div class="preview-overlay" data-blog="4">
+                        <i class="fas fa-chart-line view-icon"></i>
+                    </div>
+                </div>
+                <div class="blog-info">
+                    <span class="category-badge">SEO</span>
+                    <h3 class="blog-title" data-blog="4">The Future of SEO: AI and Machine Learning</h3>
+                    <p class="blog-description">How artificial intelligence is changing the landscape of search engine optimization.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">June 20, 2023</span>
+                        <a href="blog-detail.html?blog=4" class="blog-btn read-more-btn" data-blog="4">
+                            Read More
+                            <i class="fas fa-arrow-right btn-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graphic Design Blogs -->
+            <div class="blog-card" data-category="graphic-design">
+                <div class="preview-container" data-blog="5">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80" alt="Brand Identity">
+                    <div class="preview-overlay" data-blog="5">
+                        <i class="fab fa-behance view-icon"></i>
+                    </div>
+                </div>
+                <div class="blog-info">
+                    <span class="category-badge">Graphic Design</span>
+                    <h3 class="blog-title" data-blog="5">The Psychology of Color in Brand Identity</h3>
+                    <p class="blog-description">Understanding how color choices influence consumer perception and behavior.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">May 15, 2023</span>
+                        <a href="blog-detail.html?blog=5" class="blog-btn read-more-btn" data-blog="5">
+                            Read More
+                            <i class="fas fa-arrow-right btn-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motion Graphics Blogs -->
+            <div class="blog-card" data-category="motion-graphics">
+                <div class="preview-container" data-blog="6">
+                    <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1228&q=80" alt="Video Editing">
+                    <div class="preview-overlay" data-blog="6">
+                        <i class="fab fa-vimeo view-icon"></i>
+                    </div>
+                </div>
+                <div class="blog-info">
+                    <span class="category-badge">Motion Graphics</span>
+                    <h3 class="blog-title" data-blog="6">Creating Engaging Video Content for Social Media</h3>
+                    <p class="blog-description">Tips and techniques for producing video content that captures attention and drives engagement.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">July 10, 2023</span>
+                        <a href="blog-detail.html?blog=6" class="blog-btn read-more-btn" data-blog="6">
+                            Read More
+                            <i class="fas fa-arrow-right btn-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const blogCards = document.querySelectorAll('.blog-card');
+            const tabsNav = document.getElementById('tabsNav');
+            const readMoreBtns = document.querySelectorAll('.read-more-btn');
+            const previewContainers = document.querySelectorAll('.preview-container');
+            const previewOverlays = document.querySelectorAll('.preview-overlay');
+            const blogTitles = document.querySelectorAll('.blog-title');
+            
+            // Tab switching functionality
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Get the category from data attribute
+                    const category = button.getAttribute('data-tab');
+                    
+                    // Show/hide blogs based on category
+                    blogCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            
+            // Horizontal scroll for tabs on mobile
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            tabsNav.addEventListener('mousedown', (e) => {
+                isDown = true;
+                tabsNav.classList.add('active');
+                startX = e.pageX - tabsNav.offsetLeft;
+                scrollLeft = tabsNav.scrollLeft;
+            });
+            
+            tabsNav.addEventListener('mouseleave', () => {
+                isDown = false;
+                tabsNav.classList.remove('active');
+            });
+            
+            tabsNav.addEventListener('mouseup', () => {
+                isDown = false;
+                tabsNav.classList.remove('active');
+            });
+            
+            tabsNav.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - tabsNav.offsetLeft;
+                const walk = (x - startX) * 2;
+                tabsNav.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Touch events for mobile
+            tabsNav.addEventListener('touchstart', (e) => {
+                isDown = true;
+                startX = e.touches[0].pageX - tabsNav.offsetLeft;
+                scrollLeft = tabsNav.scrollLeft;
+            });
+            
+            tabsNav.addEventListener('touchend', () => {
+                isDown = false;
+            });
+            
+            tabsNav.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - tabsNav.offsetLeft;
+                const walk = (x - startX) * 2;
+                tabsNav.scrollLeft = scrollLeft - walk;
+            });
+        });
+    </script>
+</body>
+</html>
