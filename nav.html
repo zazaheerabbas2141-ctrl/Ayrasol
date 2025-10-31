@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AyraSol Services</title>
+    <link rel="icon" type="image/x-icon" href="logo icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #e6e6e6;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+            padding-top: 85px; 
+        }
+        
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f9f9f9;
+        }
+
+        #navbar {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            height: 85px;
+            position: relative;
+            z-index: 1000;
+            width: 100%;
+            margin: 0;
+            border-radius: 0;
+        }
+        
+        body.dark-mode .navbar {
+            background-color: #333;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: 30px;
+        }
+        
+        .logo img {
+            height: 110px; 
+            width: auto;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            padding-top: 5px;
+        }
+
+        .dark-logo {
+            display: none;
+            height: 60px !important; 
+            width: auto;
+        }
+        
+        body.dark-mode .light-logo {
+            display: none;
+        }
+        
+        body.dark-mode .dark-logo {
+            display: block;
+        }
+  
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            position: relative;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            color: #2a727d;
+            text-decoration: none;
+            padding: 12px 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+            
+        body.dark-mode .nav-links a {
+            color: #f9f9f9;
+        }
+        
+        .nav-links a:hover {
+            background-color: #2a727d;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        body.dark-mode .nav-links a:hover {
+            background-color: #444;
+        }
+
+        .dropdown-arrow {
+            margin-left: 8px;
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links li:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-right: 20px;
+        }
+
+        
+        .desktop-search {
+            display: flex;
+            align-items: center;
+            background: transparent;
+            border-radius: 8px;
+            padding: 8px;
+            border: none;
+            width: 50px;
+            height: 50px;
+            overflow: visible;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .desktop-search:hover,
+        .desktop-search:focus-within {
+            width: 250px;
+            background: #f5f7fa;
+            border: 1px solid #e0e0e0;
+            padding: 8px 15px;
+        }
+
+        body.dark-mode .desktop-search:hover,
+        body.dark-mode .desktop-search:focus-within {
+            background: #444;
+            border-color: #555;
+        }
+
+        .desktop-search input {
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 8px;
+            flex: 1;
+            font-size: 14px;
+            color: #183039;
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .desktop-search:hover input,
+        .desktop-search:focus-within input {
+            width: 100%;
+            opacity: 1;
+        }
+
+        body.dark-mode .desktop-search input {
+            color: #f9f9f9;
+        }
+
+        .desktop-search input::placeholder {
+            color: #8b9ca0;
+        }
+
+        .desktop-search button {
+            background: transparent;
+            border: none;
+            color: #2a727d;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            position: absolute;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .desktop-search button:hover {
+            background: #2a727d;
+            color: white;
+        }
+        
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #8b9ca0;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        body.dark-mode .icon-btn {
+            color: #f9f9f9;
+        }
+        
+        .icon-btn:hover {
+            color: #2a727d;
+            background-color: #f0f8fa;
+            transform: scale(1.1);
+        }
+        
+        body.dark-mode .icon-btn:hover {
+            background-color: #444;
+            color: #f9f9f9;
+        }
+        
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            background-color: #2a727d;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid #235a63;
+        }
+        
+        .contact-btn:hover {
+            background-color: transparent;
+            border: 2px solid #235a63;
+            color:#235a63;
+        }
+        
+        body.dark-mode .contact-btn:hover {
+            background-color: #3a8a95;
+            box-shadow: 0 5px 15px rgba(42, 114, 125, 0.5);
+        }
+        
+        .contact-btn i {
+            margin-right: 8px;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            position: relative;
+            z-index: 1001;
+        }
+        
+        .hamburger span {
+            height: 3px;
+            width: 100%;
+            background-color: #183039;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .hamburger span {
+            background-color: #f9f9f9;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            width: 950px;
+            display: none;
+            flex-wrap: wrap;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            z-index: 1000;
+            gap: 20px;
+
+        }
+        
+        body.dark-mode .dropdown {
+            background-color: #333;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .nav-links li:hover .dropdown {
+            display: flex;
+        }
+ 
+        .services-dropdown {
+            display: none;
+            left: -50px;
+            height: 380px;
+        }
+        
+        .services-column {
+            flex: 1;
+            min-width: 220px;
+        }
+        
+        .service-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin: 6px 0;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .service-item:hover {
+            background-color: #e6e6e6 !important;
+            color:#183039 !important;
+            transform: translateX(5px);
+        }
+        
+        body.dark-mode .service-item:hover {
+            background-color: #444;
+        }
+        
+        .service-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: solid 2px #2a727d;
+            padding: 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .service-icon {
+            background-color: #555;
+            border-color: #f9f9f9;
+        }
+        
+        .service-item:hover .service-icon {
+            background-color: #2a727d;
+            color: white;
+        }
+        
+        .dropdown-image {
+            flex: 0 0 320px;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .dropdown-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .partners-dropdown {
+            display: none;
+            width: 800px;
+            left: -50px;
+            flex-direction: row;
+            height: auto;
+            padding: 25px;
+        }
+        
+        .partners-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .partner-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 8px 0;
+            border: 1px solid #e0e0e0;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .partner-item:hover {
+            background-color: #e6e6e6 !important;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        body.dark-mode .partner-item {
+            border-color: #555;
+        }
+        
+        body.dark-mode .partner-item:hover {
+            background-color: #444;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .partner-logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            padding: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .partner-logo img {
+            width: 180%;
+            height: 180%;
+            object-fit: contain;
+        }
+        
+        body.dark-mode .partner-logo {
+            background-color: #555;
+            border-color: #f9f9f9;
+        }
+        
+        .partner-info {
+            flex: 1;
+        }
+        
+        .partner-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #2a727d;
+        }
+        
+        body.dark-mode .partner-name {
+            color: #f9f9f9;
+        }
+        
+        .partner-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        body.dark-mode .partner-description {
+            color: #ccc;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background-color: #fff;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.4s ease;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        body.dark-mode .mobile-menu {
+            background-color: #333;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        body.dark-mode .mobile-menu-header {
+            border-bottom-color: #555;
+        }
+
+        .mobile-close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #8b9ca0;
+            transition: all 0.3s ease;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-close-btn:hover {
+            background-color: #f0f0f0;
+            color: #2a727d;
+        }
+
+        body.dark-mode .mobile-close-btn:hover {
+            background-color: #444;
+            color: #f9f9f9;
+        }
+
+        
+        .mobile-search {
+            display: flex;
+            align-items: center;
+            background: #f5f7fa;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            width: 100%;
+        }
+
+        body.dark-mode .mobile-search {
+            background: #444;
+            border-color: #555;
+        }
+
+        .mobile-search input {
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 8px;
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            width: 100%;
+        }
+
+        body.dark-mode .mobile-search input {
+            color: #f9f9f9;
+        }
+
+        .mobile-search input::placeholder {
+            color: #8b9ca0;
+        }
+
+        .mobile-search button {
+            background: transparent;
+            border: none;
+            color: #2a727d;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .mobile-search button:hover {
+            background: #2a727d;
+            color: white;
+        }
+        
+        .mobile-nav-links {
+            list-style: none;
+        }
+        
+        .mobile-nav-links li {
+            margin-bottom: 10px;
+        }
+        
+        .mobile-nav-links a {
+            display: flex;
+            align-items: left;
+            justify-content: space-between;
+            color: #183039;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .mobile-nav-links a {
+            color: #f9f9f9;
+        }
+        
+        .mobile-nav-links a:hover {
+            background-color: #e6e6e6;
+        }
+        
+        body.dark-mode .mobile-nav-links a:hover {
+            background-color: #444;
+        }
+        
+        .mobile-dropdown {
+            display: none;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin: 10px 0;
+            padding: 15px;
+        }
+        
+        body.dark-mode .mobile-dropdown {
+            background-color: #444;
+        }
+        
+        .mobile-dropdown.active {
+            display: block;
+        }
+        
+        .mobile-contact-btn {
+            display: none;
+            align-items: center;
+            background-color: #2a727d;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid #235a63;
+            width: 100%;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .mobile-contact-btn:hover {
+            background-color: transparent;
+            border: 2px solid #235a63;
+            color:#235a63;
+        }
+        
+        body.dark-mode .mobile-contact-btn:hover {
+            background-color: #3a8a95;
+            box-shadow: 0 5px 15px rgba(42, 114, 125, 0.5);
+        }
+        
+        .mobile-contact-btn i {
+            margin-right: 8px;
+        }
+        
+       
+        .mobile-service-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 8px 0;
+            text-decoration: none;
+            color: #183039;
+            border: 1px solid #e0e0e0;
+            background: #fafafa;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        body.dark-mode .mobile-service-item {
+            background: #444;
+            border-color: #555;
+            color: #f9f9f9;
+        }
+
+        .mobile-service-item:hover {
+            background-color: #e6e6e6;
+            transform: translateX(5px);
+            border-color: #2a727d;
+        }
+
+        body.dark-mode .mobile-service-item:hover {
+            background-color: #555;
+            border-color: #2a727d;
+        }
+
+        .mobile-service-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border: 1px solid #d0d0d0;
+            border-radius: 12px;
+            color: #2a727d;
+            flex-shrink: 0;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .mobile-service-icon {
+            background: #555;
+            border-color: #777;
+            color: #f9f9f9;
+        }
+
+        .mobile-service-item:hover .mobile-service-icon {
+            background-color: #2a727d;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .mobile-service-text {
+            flex: 1;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        
+        .mobile-partner-item {
+            display: flex;
+            flex-direction: column;
+            padding: 18px;
+            border-radius: 12px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        body.dark-mode .mobile-partner-item {
+            background: #444;
+            border-color: #555;
+        }
+
+        .mobile-partner-item:hover {
+            background-color: #e6e6e6;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .mobile-partner-item:hover {
+            background-color: #555;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .mobile-partner-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .mobile-partner-logo {
+            width: 55px;
+            height: 55px;
+            margin-right: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            padding: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        body.dark-mode .mobile-partner-logo {
+            background-color: #555;
+            border-color: #777;
+        }
+
+        .mobile-partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .mobile-partner-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #2a727d;
+        }
+
+        body.dark-mode .mobile-partner-name {
+            color: #f9f9f9;
+        }
+
+        .mobile-partner-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        body.dark-mode .mobile-partner-description {
+            color: #ccc;
+        }
+        
+        .mobile-dropdown-arrow {
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-dropdown-arrow.active {
+            transform: rotate(180deg);
+        }
+
+        
+        .dropdown-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 998;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1200px) {
+            .dropdown {
+                width: 850px;
+            }
+            
+            .services-dropdown {
+                height: 350px;
+            }
+            
+            .dropdown-image {
+                flex: 0 0 280px;
+            }
+            
+            .partners-dropdown {
+                width: 700px;
+            }
+
+            .desktop-search:hover,
+            .desktop-search:focus-within {
+                width: 220px;
+            }
+               .logo img {
+                height: 120px;
+                 padding-top: 5px;
+            }
+            
+            .dark-logo {
+                height: 65px !important;
+                 padding-top: 5px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links, .desktop-search {
+                display: none;
+            }
+            
+            .dropdown {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: none;
+                display: none;
+                border-radius: 0;
+                padding: 15px;
+                flex-direction: column;
+            }
+            
+            .services-dropdown {
+                left: 0;
+                height: auto;
+            }
+            
+            .partners-dropdown {
+                left: 0;
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+            }
+            
+            .partners-column {
+                min-width: 100%;
+            }
+            
+            .dropdown-image {
+                display: none;
+            }
+            
+            .nav-right {
+                gap: 10px;
+            }
+            
+        
+            .contact-btn {
+                display: none;
+            }
+            
+           
+            .mobile-contact-btn {
+                display: flex;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                height: 75px;
+            }
+            
+            .nav-right {
+                gap: 8px;
+                padding-right: 15px; 
+            }
+            
+            .icon-btn {
+                padding: 8px;
+                font-size: 16px;
+            }
+            
+            .dropdown {
+                padding: 10px;
+            }
+            
+            .service-item, .partner-item {
+                padding: 15px;
+            }
+            
+            .mobile-menu {
+                width: 300px;
+            }
+            
+        
+            .logo img {
+                height: 120px;
+                 padding-top: 5px;
+            }
+            
+            .dark-logo {
+                height: 85px !important;
+                 padding-top: 5px;
+            }
+            body {
+              padding-top: 80px;
+            };
+        }
+        
+        @media (max-width: 576px) {
+            .navbar {
+                height: 70px;
+            }
+            
+            body {
+                padding-top: 75px; 
+            }
+            
+            .nav-right {
+                gap: 5px;
+                padding-right: 10px; 
+            }
+            
+            .icon-btn {
+                padding: 6px;
+                font-size: 14px;
+                width: 35px;
+                height: 35px;
+            }
+            
+            .service-icon, .partner-logo {
+                padding: 12px;
+                margin-right: 12px;
+            }
+            
+            .mobile-menu {
+                width: 280px;
+            }
+            
+            .mobile-service-item {
+                padding: 12px;
+                gap: 12px;
+            }
+            
+            .mobile-service-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 16px;
+            }
+            
+            .mobile-service-text {
+                font-size: 14px;
+            }
+            
+            .mobile-partner-item {
+                padding: 15px;
+            }
+            
+            .mobile-partner-logo {
+                width: 50px;
+                height: 50px;
+                margin-right: 12px;
+            }
+            
+            .mobile-partner-name {
+                font-size: 15px;
+            }
+            
+            .mobile-partner-description {
+                font-size: 13px;
+            }
+            
+           
+            .logo img {
+                height: 120px;
+                padding-top: 5px;
+            }
+            
+            .dark-logo {
+                height: 90px !important;
+                 padding-top: 5px;
+            }
+            
+            .nav-left {
+                padding-left: 10px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .icon-btn {
+                padding: 5px;
+                width: 32px;
+                height: 32px;
+            }
+            
+            .service-icon, .partner-logo {
+                padding: 8px;
+                width: 30px;
+                height: 30px;
+            }
+            
+            .mobile-menu {
+                width: 260px;
+            }
+            
+            .mobile-service-item {
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .mobile-service-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+            .navbar{
+
+                height: 65px;
+            }
+            body{
+                padding-top: 70px;
+            }
+            
+            .mobile-service-text {
+                font-size: 13px;
+            }
+            
+            .mobile-partner-item {
+                padding: 12px;
+            }
+            
+            .mobile-partner-logo {
+                width: 45px;
+                height: 45px;
+                margin-right: 10px;
+            }
+            
+            .mobile-partner-name {
+                font-size: 14px;
+            }
+            
+            .mobile-partner-description {
+                font-size: 12px;
+            }
+            
+           
+            .logo img {
+                height: 100px;
+                padding-top: 5px;
+            }
+            
+            .dark-logo {
+                height: 100px;
+                 padding-top: 5px;
+            }
+            
+            .nav-left {
+                padding-left: 8px;
+            }
+            
+            .nav-right {
+                padding-right: 8px;
+            }
+        }
+
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    margin-top: 5px;
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: none;
+}
+
+.suggestions li {
+    list-style: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-bottom: 1px solid #eee;
+}
+
+.suggestions li:last-child {
+    border-bottom: none;
+}
+
+.suggestions li:hover {
+    background: #2a727d;
+    color: #fff;
+}
+
+body.dark-mode .suggestions {
+    background: #333;
+    border-color: #555;
+}
+
+body.dark-mode .suggestions li:hover {
+    background: #2a727d;
+    color: #fff;
+}
+    </style>
+</head>
+<body>
+   
+    <div class="dropdown-overlay" id="dropdownOverlay"></div>
+    
+    <section id="navbar">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <img src="logo.png" alt="AyraSol Logo" class="light-logo">
+                    <img src="dark logo.png" alt="AyraSol Logo" class="dark-logo">
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    
+                    <li>
+                        <a href="#">Services <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                        <div class="dropdown services-dropdown">
+                            <div class="services-column">
+                                <a href="services/seo.html" class="service-item">
+                                    <div class="service-icon"><i class="fas fa-search"></i></div>
+                                    <span>SEO</span>
+                                </a>
+                                <a href="services/virtual-assistance.html" class="service-item">
+                                    <div class="service-icon"><i class="fas fa-headset"></i></div>
+                                    <span>Virtual Assistance</span>
+                                </a>
+                                <a href="services/motion-graphics.html" class="service-item">
+                                    <div class="service-icon"><i class="fas fa-film"></i></div>
+                                    <span>Motion Graphics</span>
+                                </a>
+                                <a href="services/social-media-handling.html" class="service-item">
+                                    <div class="service-icon"><i class="fab fa-twitter"></i></div>
+                                    <span>Social Media Handling</span>
+                                </a>
+                            </div>
+                            
+                            <div class="services-column">
+                                <a href="services/web-development.html" class="service-item">
+                                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                                    <span>Web Development</span>
+                                </a>
+                                <a href="services/social-media-marketing.html" class="service-item">
+                                    <div class="service-icon"><i class="fas fa-share-alt"></i></div>
+                                    <span>Social Media Marketing</span>
+                                </a>
+                                <a href="services/content-creation.html" class="service-item">
+                                    <div class="service-icon"><i class="fas fa-pen"></i></div>
+                                    <span>Content Creation</span>
+                                </a>
+                                <a href="services/advertising-services.html" class="service-item">
+                                    <div class="service-icon"><i class="fas fa-ad"></i></div>
+                                    <span>Advertising Services</span>
+                                </a>
+                            </div>
+                            
+                            <div class="dropdown-image">
+                                <img src="dropdown.png" alt="Services Image">
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <a href="#">Partners <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                        <div class="dropdown partners-dropdown">
+                            <div class="partners-column">
+                                <a href="partners/ayrasol-consultancy.html" class="partner-item">
+                                    <div class="partner-logo">
+                                        <img src="consultants.png" alt="AyraSol Consultancy">
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-name">AyraSol Consultancy</div>
+                                        <div class="partner-description">Leading provider of innovative technology solutions and digital transformation services for businesses worldwide.</div>
+                                    </div>
+                                </a>
+                                <a href="partners/ayrasolar.html" class="partner-item">
+                                    <div class="partner-logo">
+                                        <img src="solar.png" alt="Ayrasolar">
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-name">Ayrasolar</div>
+                                        <div class="partner-description">International business development and strategic partnership experts with global market reach.</div>
+                                    </div>
+                                </a>
+                                <a href="partners/ayrasol-autos.html" class="partner-item">
+                                    <div class="partner-logo">
+                                        <img src="autos.png" alt="Ayrasol Autos">
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-name">Ayrasol Autos </div>
+                                        <div class="partner-description">Specialized in cloud infrastructure, data management, and scalable computing solutions for enterprises.</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="partners-column">
+                                <a href="partners/ai-hankao.html" class="partner-item">
+                                    <div class="partner-logo">
+                                        <img src="aai hankao.png" alt="Ai-Hankao">
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-name">Ai-Hankao</div>
+                                        <div class="partner-description">Data-driven insights and analytics solutions to drive business growth and performance optimization.</div>
+                                    </div>
+                                </a>
+                                <a href="partners/bullay-shah.html" class="partner-item">
+                                    <div class="partner-logo">
+                                        <img src="abullay shah.png" alt="Bullay Shah">
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-name">Bullay Shah</div>
+                                        <div class="partner-description">Cybersecurity specialists providing comprehensive protection solutions for digital assets and data.</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+            
+            <!-- ===== NAVBAR RIGHT SECTION ===== -->
+            <div class="nav-right">
+              <div class="desktop-search">
+    <input type="text" id="desktopSearch" placeholder="Search Ayrasol...">
+    <button type="submit"><i class="fas fa-search"></i></button>
+    <ul id="desktopSuggestions" class="suggestions"></ul>
+</div>
+
+                
+                <button class="icon-btn change-language" title="Change Language"><i class="fas fa-globe"></i></button>
+                <button class="icon-btn theme-toggle" title="Toggle Dark/Light Mode"><i class="fas fa-moon"></i></button>
+                <button class="contact-btn"><i class="fas fa-phone"></i> <span>Contact Us</span></button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <!-- ===== MOBILE MENU ===== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <button class="mobile-close-btn" id="mobileCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <!-- Mobile Search Bar -->
+<div class="mobile-search">
+    <input type="text" id="mobileSearch" placeholder="Search Ayrasol...">
+    <button type="submit"><i class="fas fa-search"></i></button>
+    <ul id="mobileSuggestions" class="suggestions"></ul>
+</div>
+        
+        <ul class="mobile-nav-links">
+            <li><a href="#">Home</a></li>
+            
+            <li>
+                <a href="#" class="mobile-dropdown-toggle">
+                    Services <i class="fas fa-chevron-down mobile-dropdown-arrow"></i>
+                </a>
+                <div class="mobile-dropdown" id="mobileServicesDropdown">
+                    <a href="services/seo.html" class="mobile-service-item">
+                        <div class="mobile-service-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="mobile-service-text">SEO</div>
+                    </a>
+                    <a href="services/virtual-assistance.html" class="mobile-service-item">
+                        <div class="mobile-service-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="mobile-service-text">Virtual Assistance</div>
+                    </a>
+                    <a href="services/motion-graphics.html" class="mobile-service-item">
+                        <div class="mobile-service-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="mobile-service-text">Motion Graphics</div>
+                    </a>
+                    <a href="services/social-media-handling.html" class="mobile-service-item">
+                        <div class="mobile-service-icon">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="mobile-service-text">Social Media Handling</div>
+                    </a>
+                    <a href="services/web-development.html" class="mobile-service-item">
+                        <div class="mobile-service-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="mobile-service-text">Web Development</div>
+                    </a>
+                    <a href="services/social-media-marketing.html" class="mobile-service-item">
+                        <div class="mobile-service-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="mobile-service-text">Social Media Marketing</div>
+                    </a>
+                    <a href="services/content-creation.html" class="mobile-service-item">
+                        <div class="mobile-service-icon">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                        <div class="mobile-service-text">Content Creation</div>
+                    </a>
+                    <a href="services/advertising-services.html" class="mobile-service-item">
+                        <div class="mobile-service-icon">
+                            <i class="fas fa-ad"></i>
+                        </div>
+                        <div class="mobile-service-text">Advertising Services</div>
+                    </a>
+                </div>
+            </li>
+            
+            <li>
+                <a href="#" class="mobile-dropdown-toggle">
+                    Partners <i class="fas fa-chevron-down mobile-dropdown-arrow"></i>
+                </a>
+                <div class="mobile-dropdown" id="mobilePartnersDropdown">
+                    <a href="partners/ayrasol-consultancy.html" class="mobile-partner-item">
+                        <div class="mobile-partner-header">
+                            <div class="mobile-partner-logo">
+                                <img src="consultants.png" alt="AyraSol Consultancy">
+                            </div>
+                            <div class="mobile-partner-name">AyraSol Consultancy</div>
+                        </div>
+                        <div class="mobile-partner-description">
+                            Leading provider of innovative technology solutions and digital transformation services for businesses worldwide.
+                        </div>
+                    </a>
+                    <a href="partners/ayrasolar.html" class="mobile-partner-item">
+                        <div class="mobile-partner-header">
+                            <div class="mobile-partner-logo">
+                                <img src="solar.png" alt="Ayrasolar">
+                            </div>
+                            <div class="mobile-partner-name">Ayrasolar</div>
+                        </div>
+                        <div class="mobile-partner-description">
+                            International business development and strategic partnership experts with global market reach.
+                        </div>
+                    </a>
+                    <a href="partners/ayrasol-autos.html" class="mobile-partner-item">
+                        <div class="mobile-partner-header">
+                            <div class="mobile-partner-logo">
+                                <img src="aatuos.png" alt="AyraSol Autos">
+                            </div>
+                            <div class="mobile-partner-name">Ayrasol Autos </div>
+                        </div>
+                        <div class="mobile-partner-description">
+                            Specialized in cloud infrastructure, data management, and scalable computing solutions for enterprises.
+                        </div>
+                    </a>
+                    <a href="partners/ai-hankao.html" class="mobile-partner-item">
+                        <div class="mobile-partner-header">
+                            <div class="mobile-partner-logo">
+                                <img src="aai hankao.png" alt="Ai-Hankao">
+                            </div>
+                            <div class="mobile-partner-name">Ai-Hankao</div>
+                        </div>
+                        <div class="mobile-partner-description">
+                            Data-driven insights and analytics solutions to drive business growth and performance optimization.
+                        </div>
+                    </a>
+                    <a href="partners/bullay-shah.html" class="mobile-partner-item">
+                        <div class="mobile-partner-header">
+                            <div class="mobile-partner-logo">
+                                <img src="abullay shah.png" alt="Bullay Shah">
+                            </div>
+                            <div class="mobile-partner-name">Bullay Shah</div>
+                        </div>
+                        <div class="mobile-partner-description">
+                            Cybersecurity specialists providing comprehensive protection solutions for digital assets and data.
+                        </div>
+                    </a>
+                </div>
+            </li>
+            
+            <li><a href="#">About</a></li>
+        </ul>
+        
+        
+        <button class="mobile-contact-btn"><i class="fas fa-phone"></i> <span>Contact Us</span></button>
+    </div>
+
+    <script>
+        // ===== MOBILE MENU FUNCTIONALITY =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+        const overlay = document.getElementById('dropdownOverlay');
+
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            
+            if (mobileMenu.classList.contains('active')) {
+                overlay.style.display = 'block';
+            } else {
+                overlay.style.display = 'none';
+            }
+            
+            // Close all mobile dropdowns when menu opens
+            document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            
+            // Reset dropdown arrows
+            document.querySelectorAll('.mobile-dropdown-arrow').forEach(arrow => {
+                arrow.classList.remove('active');
+            });
+        }
+
+        if (hamburger) {
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMobileMenu();
+            });
+        }
+
+        if (mobileCloseBtn) {
+            mobileCloseBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMobileMenu();
+            });
+        }
+        
+        // ===== DARK MODE TOGGLE =====
+        document.querySelector('.theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+        
+        // ===== MOBILE DROPDOWN FUNCTIONALITY =====
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const arrow = this.querySelector('.mobile-dropdown-arrow');
+                const dropdown = this.nextElementSibling;
+                
+                // Close other dropdowns
+                document.querySelectorAll('.mobile-dropdown').forEach(item => {
+                    if (item !== dropdown) {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Reset other arrows
+                document.querySelectorAll('.mobile-dropdown-arrow').forEach(item => {
+                    if (item !== arrow) {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+                arrow.classList.toggle('active');
+            });
+        });
+        
+        // ===== OVERLAY CLICK FUNCTIONALITY =====
+        overlay.addEventListener('click', function() {
+            // Close desktop dropdowns
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.style.display = 'none';
+            });
+            
+            // Close mobile menu
+            mobileMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            
+            // Close mobile dropdowns
+            document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            
+            // Reset mobile dropdown arrows
+            document.querySelectorAll('.mobile-dropdown-arrow').forEach(arrow => {
+                arrow.classList.remove('active');
+            });
+            
+            // Hide overlay
+            this.style.display = 'none';
+        });
+        
+        // ===== CLOSE DROPDOWNS ON ITEM CLICK =====
+        document.querySelectorAll('.service-item, .partner-item, .mobile-service-item, .mobile-partner-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.style.display = 'none';
+                });
+                
+                document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                
+                overlay.style.display = 'none';
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+        
+        // ===== WINDOW RESIZE HANDLER =====
+        window.addEventListener('resize', function() {
+            // Reset dropdown display on resize
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                if (window.innerWidth > 992) {
+                    dropdown.style.display = '';
+                } else {
+                    dropdown.style.display = 'none';
+                }
+            });
+            
+            if (window.innerWidth > 992) {
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                overlay.style.display = 'none';
+                
+                document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.mobile-dropdown-arrow').forEach(arrow => {
+                    arrow.classList.remove('active');
+                });
+            }
+        });
+        
+        // // ===== LANGUAGE TOGGLE FUNCTIONALITY =====
+        // document.querySelector('.change-language').addEventListener('click', function() {
+        //     alert('Language toggle functionality would be implemented here');
+        // });
+
+        // ===== PREVENT CLICKS INSIDE MOBILE MENU FROM CLOSING IT =====
+        mobileMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // ===== SEARCH FUNCTIONALITY =====
+        document.querySelectorAll('.desktop-search button, .mobile-search button').forEach(button => {
+            button.addEventListener('click', function() {
+                const searchInput = this.parentElement.querySelector('input');
+                if (searchInput.value.trim()) {
+                    alert('Searching for: ' + searchInput.value);
+                    searchInput.value = '';
+                }
+            });
+        });
+
+        // ===== ENTER KEY SEARCH TRIGGER =====
+        document.querySelectorAll('.desktop-search input, .mobile-search input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    if (this.value.trim()) {
+                        alert('Searching for: ' + this.value);
+                        this.value = '';
+                    }
+                }
+            });
+        });
+        
+        // ===== MOBILE CONTACT BUTTON FUNCTIONALITY =====
+        document.querySelector('.mobile-contact-btn').addEventListener('click', function() {
+            alert('Contact Us button clicked!');
+            mobileMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.style.display = 'none';
+        });
+    </script>
+
+
+
+
+<script>
+// --- DATA: Full Pages, Sections & Keywords ---
+const searchData = [
+  { keyword: "Home", link: "index.html" },
+  { keyword: "Services", link: "services.html" },
+  { keyword: "Partners", link: "partners.html" },
+  { keyword: "About", link: "about.html" },
+  { keyword: "Contact", link: "contact.html" },
+  { keyword: "Blogs", link: "blogs.html" },
+  { keyword: "Team", link: "team.html" },
+  { keyword: "Projects", link: "projects.html" },
+  { keyword: "Our Services", link: "index.html#services" },
+  { keyword: "Why Choose Us", link: "index.html#why-choose" },
+  { keyword: "Testimonials", link: "index.html#testimonials" },
+  { keyword: "FAQs", link: "index.html#faqs" },
+  { keyword: "Our Mission & Vision", link: "about.html#mission" },
+  { keyword: "Our Team", link: "about.html#team" },
+  { keyword: "Address", link: "contact.html#address" },
+  { keyword: "Location", link: "contact.html#location" },
+  { keyword: "Web Development", link: "web.html" },
+  { keyword: "Graphic Design", link: "design.html" },
+  { keyword: "SEO", link: "seo.html" },
+  { keyword: "Motion Graphics", link: "motion.html" },
+  { keyword: "Social Media Marketing", link: "marketing.html" },
+  { keyword: "Social Media Handling", link: "handling.html" },
+  { keyword: "Virtual Assistance", link: "virtual.html" },
+  { keyword: "Content Creation", link: "content.html" },
+  { keyword: "Why Choose Ayrasol for SEO", link: "seo.html#why-seo" },
+  { keyword: "How SEO Works", link: "seo.html#how-seo" },
+  { keyword: "Why Choose Ayrasol for Web Development", link: "web.html#why-web" },
+  { keyword: "How We Develop Websites", link: "web.html#how-web" },
+  { keyword: "Responsive Design", link: "web.html" },
+  { keyword: "Frontend Development", link: "web.html" },
+  { keyword: "Brand Identity", link: "design.html" },
+  { keyword: "SEO Audit", link: "seo.html" },
+  { keyword: "Keyword Research", link: "seo.html" },
+  { keyword: "Hashtag Strategy", link: "marketing.html" },
+  { keyword: "Video Animation", link: "motion.html" },
+  { keyword: "Blog Writing", link: "content.html" },
+  { keyword: "Email Management", link: "virtual.html" },
+  { keyword: "Team of Designers", link: "team.html" },
+  { keyword: "Web Developers", link: "team.html" },
+  { keyword: "Our Projects", link: "projects.html" }
+];
+
+// --- SEARCH FUNCTION ---
+function setupSearch(inputId, suggestionsId) {
+    const searchInput = document.getElementById(inputId);
+    const suggestionBox = document.getElementById(suggestionsId);
+
+    searchInput.addEventListener("input", () => {
+        const query = searchInput.value.toLowerCase().trim();
+        suggestionBox.innerHTML = "";
+
+        if (!query) {
+            suggestionBox.style.display = "none";
+            return;
+        }
+
+        const filtered = searchData.filter(item =>
+            item.keyword.toLowerCase().includes(query)
+        );
+
+        filtered.slice(0, 10).forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item.keyword;
+            li.addEventListener("click", () => {
+                window.location.href = item.link;
+            });
+            suggestionBox.appendChild(li);
+        });
+
+        if (filtered.length === 0) {
+            const noResult = document.createElement("li");
+            noResult.textContent = "No results found.";
+            noResult.style.color = "#999";
+            suggestionBox.appendChild(noResult);
+        }
+
+        suggestionBox.style.display = "block";
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!searchInput.parentElement.contains(e.target)) {
+            suggestionBox.style.display = "none";
+        }
+    });
+}
+
+// Initialize search for desktop and mobile
+setupSearch("desktopSearch", "desktopSuggestions");
+setupSearch("mobileSearch", "mobileSuggestions");
+</script>
+</body>
+</html>
